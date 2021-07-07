@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const SearchBar = ({onChangeText, onPress}) => {
+const SearchBar = ({onChangeText, onPress, sortTextTitle}) => {
   return (
     <View style={styles.SectionStyle}>
       <Image
@@ -16,13 +16,15 @@ const SearchBar = ({onChangeText, onPress}) => {
         style={styles.ImageStyle}
       />
       <TextInput
-        style={{flex: 1}}
+        style={{flex: 1, color: '#000'}}
         onChangeText={onChangeText}
         placeholder="Cari nama,bank atau nominal"
         underlineColorAndroid="transparent"
       />
       <TouchableOpacity style={styles.buttonModal} onPress={onPress}>
-        <Text style={{color: '#ff6500', fontWeight: 'bold'}}>URUTKAN</Text>
+        <Text style={{color: '#ff6500', fontWeight: 'bold'}}>
+          {sortTextTitle}
+        </Text>
         <Image
           source={require('../icon/arrowdown.png')} //Change your icon image here
           style={styles.ArrowStyle}

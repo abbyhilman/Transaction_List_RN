@@ -28,9 +28,23 @@ const DetailTransaction = ({navigation, route}) => {
 
   function getParsedDate(strDate) {
     var strSplitDate = String(strDate).split(' ');
+    var months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
     var date = new Date(strSplitDate[0]);
     var dd = date.getDate();
-    var mm = date.getMonth() + 1; //January is 0!
+    var mm = months[date.getMonth()];
 
     var yyyy = date.getFullYear();
     if (dd < 10) {
@@ -39,7 +53,7 @@ const DetailTransaction = ({navigation, route}) => {
     if (mm < 10) {
       mm = '0' + mm;
     }
-    date = dd + '-' + mm + '-' + yyyy;
+    date = dd + ' ' + mm + ' ' + yyyy;
     return date.toString();
   }
 
