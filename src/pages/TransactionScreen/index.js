@@ -201,6 +201,18 @@ const TransactionScreen = ({navigation}) => {
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[1]);
 
+    if (search) {
+      search.sort((a, b) => {
+        if (a.beneficiary_name > b.beneficiary_name) {
+          return 1;
+        }
+        if (b.beneficiary_name > a.beneficiary_name) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+
     data.sort((a, b) => {
       if (a.beneficiary_name > b.beneficiary_name) {
         return 1;
@@ -220,6 +232,18 @@ const TransactionScreen = ({navigation}) => {
     setSelectSort(false);
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[2]);
+
+    if (search) {
+      search.sort((a, b) => {
+        if (a.beneficiary_name > b.beneficiary_name) {
+          return -1;
+        }
+        if (b.beneficiary_name > a.beneficiary_name) {
+          return 1;
+        }
+        return 0;
+      });
+    }
 
     data.sort((a, b) => {
       if (a.beneficiary_name > b.beneficiary_name) {
@@ -241,6 +265,15 @@ const TransactionScreen = ({navigation}) => {
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[3]);
 
+    if (search) {
+      search.sort((a, b) => {
+        return (
+          new Date(getParsedDate(b.created_at)) -
+          new Date(getParsedDate(a.created_at))
+        );
+      });
+    }
+
     data.sort((a, b) => {
       return (
         new Date(getParsedDate(b.created_at)) -
@@ -257,6 +290,15 @@ const TransactionScreen = ({navigation}) => {
     setSelectSort(false);
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[4]);
+
+    if (search) {
+      search.sort((a, b) => {
+        return (
+          new Date(getParsedDate(a.created_at)) -
+          new Date(getParsedDate(b.created_at))
+        );
+      });
+    }
 
     data.sort((a, b) => {
       return (
