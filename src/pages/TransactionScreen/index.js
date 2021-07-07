@@ -90,7 +90,7 @@ const TransactionScreen = ({navigation}) => {
     ];
     var date = new Date(strSplitDate[0]);
     var dd = date.getDate();
-    var mm = months[date.getMonth()]; //January is 0!
+    var mm = months[date.getMonth()];
 
     var yyyy = date.getFullYear();
     if (dd < 10) {
@@ -113,7 +113,7 @@ const TransactionScreen = ({navigation}) => {
           borderLeftWidth: 5,
           borderLeftColor:
             item.status.toLowerCase().toString() === 'success'
-              ? '#1c9c3d'
+              ? '#3CB371'
               : item.status.toLowerCase().toString() === 'pending'
               ? '#ff6500'
               : '#fff',
@@ -127,16 +127,26 @@ const TransactionScreen = ({navigation}) => {
         }}>
         <View>
           <View style={{flexDirection: 'row'}}>
-            <Text>{item.beneficiary_bank}</Text>
-            <Text>&#10132;</Text>
-            <Text>{item.sender_bank}</Text>
+            <Text style={styles.bankText}>{item.beneficiary_bank}</Text>
+            <Text style={{alignSelf: 'center', marginRight: 5}}>&#10132;</Text>
+            <Text style={{fontWeight: 'bold', textTransform: 'capitalize'}}>
+              {item.sender_bank}
+            </Text>
           </View>
           <Text>{item.beneficiary_name}</Text>
           <View style={{flexDirection: 'row'}}>
             <Text>
               Rp{new Intl.NumberFormat(['ban', 'id']).format(item.amount)}
             </Text>
-            <Text>&#8226;</Text>
+            <Image
+              source={require('../../components/icon/dot.png')}
+              style={{
+                width: 5,
+                height: 5,
+                alignSelf: 'center',
+                marginHorizontal: 4,
+              }}
+            />
             <Text>{getParsedDate(item.created_at)}</Text>
           </View>
         </View>
@@ -180,15 +190,6 @@ const TransactionScreen = ({navigation}) => {
     setSelectSort(false);
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[0]);
-    data.sort(function (a, b) {
-      if (a.beneficiary_name > b.beneficiary_name) {
-        return 0;
-      }
-      if (b.beneficiary_name > a.beneficiary_name) {
-        return 0;
-      }
-      return 0;
-    });
   };
 
   const dotSelectedSort = () => {
@@ -200,7 +201,7 @@ const TransactionScreen = ({navigation}) => {
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[1]);
 
-    data.sort(function (a, b) {
+    data.sort((a, b) => {
       if (a.beneficiary_name > b.beneficiary_name) {
         return 1;
       }
@@ -220,7 +221,7 @@ const TransactionScreen = ({navigation}) => {
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[2]);
 
-    data.sort(function (a, b) {
+    data.sort((a, b) => {
       if (a.beneficiary_name > b.beneficiary_name) {
         return -1;
       }
@@ -240,14 +241,11 @@ const TransactionScreen = ({navigation}) => {
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[3]);
 
-    data.sort(function (a, b) {
-      if (getParsedDate(a.created_at) > getParsedDate(b.created_at)) {
-        return -1;
-      }
-      if (getParsedDate(b.created_at) > getParsedDate(a.created_at)) {
-        return 1;
-      }
-      return 0;
+    data.sort((a, b) => {
+      return (
+        new Date(getParsedDate(b.created_at)) -
+        new Date(getParsedDate(a.created_at))
+      );
     });
   };
 
@@ -260,14 +258,11 @@ const TransactionScreen = ({navigation}) => {
     setModalVisible(!modalVisible);
     setPickerTitle(chooseSort[4]);
 
-    data.sort(function (a, b) {
-      if (getParsedDate(a.created_at) > getParsedDate(b.created_at)) {
-        return 1;
-      }
-      if (getParsedDate(b.created_at) > getParsedDate(a.created_at)) {
-        return -1;
-      }
-      return 0;
+    data.sort((a, b) => {
+      return (
+        new Date(getParsedDate(a.created_at)) -
+        new Date(getParsedDate(b.created_at))
+      );
     });
   };
 
@@ -289,7 +284,7 @@ const TransactionScreen = ({navigation}) => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center'}}
+                style={styles.contentModal}
                 onPress={() => dotSelected()}>
                 <Image
                   source={
@@ -299,10 +294,10 @@ const TransactionScreen = ({navigation}) => {
                   }
                   style={styles.iconCircle}
                 />
-                <Text style={{marginLeft: 10}}>{chooseSort[0]}</Text>
+                <Text style={styles.contectModalText}>{chooseSort[0]}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center'}}
+                style={styles.contentModal}
                 onPress={() => {
                   dotSelectedSort();
                 }}>
@@ -314,10 +309,10 @@ const TransactionScreen = ({navigation}) => {
                   }
                   style={styles.iconCircle}
                 />
-                <Text style={{marginLeft: 10}}>{chooseSort[1]}</Text>
+                <Text style={styles.contectModalText}>{chooseSort[1]}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center'}}
+                style={styles.contentModal}
                 onPress={() => {
                   dotSelectedDecending();
                 }}>
@@ -329,10 +324,10 @@ const TransactionScreen = ({navigation}) => {
                   }
                   style={styles.iconCircle}
                 />
-                <Text style={{marginLeft: 10}}>{chooseSort[2]}</Text>
+                <Text style={styles.contectModalText}>{chooseSort[2]}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center'}}
+                style={styles.contentModal}
                 onPress={() => {
                   dotSelectedNewDate();
                 }}>
@@ -344,10 +339,10 @@ const TransactionScreen = ({navigation}) => {
                   }
                   style={styles.iconCircle}
                 />
-                <Text style={{marginLeft: 10}}>{chooseSort[3]}</Text>
+                <Text style={styles.contectModalText}>{chooseSort[3]}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center'}}
+                style={styles.contentModal}
                 onPress={() => {
                   dotSelectedLastDate();
                 }}>
@@ -359,7 +354,7 @@ const TransactionScreen = ({navigation}) => {
                   }
                   style={styles.iconCircle}
                 />
-                <Text style={{marginLeft: 10}}>{chooseSort[4]}</Text>
+                <Text style={styles.contectModalText}>{chooseSort[4]}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -395,10 +390,10 @@ const TransactionScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Platform.OS === 'android' ? STATUSBAR_HEIGHT : null,
+    // marginTop: Platform.OS === 'android' ? STATUSBAR_HEIGHT : null,
   },
   button: {
-    backgroundColor: '#1c9c3d',
+    backgroundColor: '#3CB371',
     alignSelf: 'center',
     padding: 5,
     borderRadius: 5,
@@ -416,6 +411,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
   },
+  bankText: {
+    fontWeight: 'bold',
+    marginRight: 5,
+    textTransform: 'capitalize',
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -424,11 +424,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
   },
   modalView: {
+    width: '80%',
+    height: '30%',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -458,6 +461,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  contentModal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  contectModalText: {marginLeft: 10, fontWeight: '500'},
   iconCircle: {width: 12, height: 12, tintColor: '#ff6500'},
 });
 

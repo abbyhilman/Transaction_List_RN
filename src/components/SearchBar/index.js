@@ -18,6 +18,7 @@ const SearchBar = ({onChangeText, onPress, sortTextTitle}) => {
       <TextInput
         style={{flex: 1, color: '#000'}}
         onChangeText={onChangeText}
+        placeholderTextColor={'rgba(52, 52, 52, 0.8)'}
         placeholder="Cari nama,bank atau nominal"
         underlineColorAndroid="transparent"
       />
