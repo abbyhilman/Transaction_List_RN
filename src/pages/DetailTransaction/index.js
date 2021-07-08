@@ -6,9 +6,9 @@ import {
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
-  StyleSheet,
   Image,
 } from 'react-native';
+import styles from './styles';
 
 const DetailTransaction = ({navigation, route}) => {
   const data = route.params;
@@ -66,31 +66,14 @@ const DetailTransaction = ({navigation, route}) => {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View>
-              <View
-                style={{
-                  backgroundColor: '#fff',
-                  flex: 1,
-                  flexDirection: 'row',
-                  padding: 20,
-                  borderBottomWidth: 1,
-                  borderBottomColor: 'rgba(52, 52, 52, 0.1)',
-                }}>
+              <View style={styles.idTitle}>
                 <Text style={styles.textTitle}>ID TRANSAKSI: #{item.id}</Text>
                 <Image
                   source={require('../../components/icon/copy.png')}
                   style={styles.ImageStyle}
                 />
               </View>
-              <View
-                style={{
-                  backgroundColor: '#fff',
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  padding: 20,
-                  borderBottomWidth: 1,
-                  borderBottomColor: 'rgba(52, 52, 52, 0.2)',
-                }}>
+              <View style={styles.detailText}>
                 <Text style={styles.textTitle}>DETAIL TRANSAKSI</Text>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Text style={{color: '#ff6500', fontWeight: '500'}}>
@@ -98,13 +81,7 @@ const DetailTransaction = ({navigation, route}) => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View
-                style={{
-                  backgroundColor: '#fff',
-                  flex: 1,
-                  flexDirection: 'column',
-                  padding: 20,
-                }}>
+              <View style={styles.sectionBankName}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.bankText}>{item.beneficiary_bank}</Text>
                   <Text style={{alignSelf: 'center', marginRight: 5}}>
@@ -112,12 +89,7 @@ const DetailTransaction = ({navigation, route}) => {
                   </Text>
                   <Text style={styles.bankText}>{item.sender_bank}</Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: 10,
-                    justifyContent: 'space-between',
-                  }}>
+                <View style={styles.sectionAcctNumber}>
                   <View style={{flexDirection: 'column'}}>
                     <Text style={styles.textTitle}>
                       {item.beneficiary_name}
@@ -132,12 +104,7 @@ const DetailTransaction = ({navigation, route}) => {
                     </Text>
                   </View>
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: 10,
-                    justifyContent: 'space-between',
-                  }}>
+                <View style={styles.sectionNewsTransfer}>
                   <View style={{flexDirection: 'column'}}>
                     <Text style={styles.textTitle}>BERITA TRANSFER</Text>
                     <Text>{item.remark}</Text>
@@ -165,25 +132,5 @@ const DetailTransaction = ({navigation, route}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  textTitle: {
-    fontWeight: 'bold',
-  },
-  ImageStyle: {
-    height: 15,
-    width: 15,
-    resizeMode: 'stretch',
-    alignItems: 'center',
-    tintColor: '#ff6500',
-    marginLeft: 5,
-  },
-  bankText: {
-    fontWeight: 'bold',
-    marginRight: 5,
-    textTransform: 'capitalize',
-    fontSize: 18,
-  },
-});
 
 export default DetailTransaction;
